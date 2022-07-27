@@ -1,7 +1,6 @@
 from .core import SMARTSBubbleEnv
 from .env_wrapper import SocialAgentsWrapper
 import numpy as np
-from smarts.core.controllers import ActionSpaceType
 from smarts.core.agent_interface import AgentInterface, AgentType, DoneCriteria
 from .vehicle_info import VehicleInfo
 import json
@@ -17,13 +16,19 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
     if agent_interface is None:
         agent_interface = AgentInterface.from_type(
             AgentType.Direct,
-            done_criteria=DoneCriteria(),
+            done_criteria=DoneCriteria(
+                collision=False,
+                off_road=True,
+                off_route=False,
+                on_shoulder=False,
+            ),
+            waypoints=True,  # Only for RL training
         )
     vehicles = []
     current_path = os.path.dirname(__file__)
     father_path = os.path.abspath(os.path.dirname(current_path))
     with open(
-        os.path.join(father_path, "models/true_legal_vehicle_infos.json"), "r"
+        os.path.join(father_path, "models/list_true_legal_vehicle_infos.json"), "r"
     ) as f:
         all_vehicle_infos = json.load(f)
     print("vehicle_num:{}".format(len(all_vehicle_infos)))
@@ -31,7 +36,7 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
         vehicle = VehicleInfo(
             vehicle_id=json_info["vehicle_id"],
             start_time=json_info["start_time"],
-            end_time=json_info["end_time"],
+            end_time=json_info["start_time"] + 15,
             scenario_name=json_info["scenario_name"],
             traffic_name=json_info["traffic_name"],
         )

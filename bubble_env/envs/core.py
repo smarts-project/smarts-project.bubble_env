@@ -11,7 +11,7 @@ from functools import partial
 from .vehicle_info import VehiclePosition
 from .social_utils import (
     SocialAgentMapping,
-    SOCIAL_AGENT_TERMINAL_FEATRUES,
+    SOCIAL_AGENT_TERMINAL_FEATURES,
 )
 from smarts.core.plan import (
     Mission,
@@ -72,7 +72,7 @@ def create_moving_bubble(
         follow = dict(follow_actor_id=follow_agent_id)
 
     bubble = Bubble(
-        zone=PositionalZone(pos=(0, 0), size=(20, 40)),
+        zone=PositionalZone(pos=(0, 0), size=(10, 40)),
         actor=SocialAgentActor(
             name="keep_lane0", agent_locator=f"examples:{social_agent_name}"
         ),
@@ -164,13 +164,12 @@ class SMARTSBubbleEnv:
             AgentType.Direct,
             done_criteria=DoneCriteria(
                 collision=self.social_agent_interface_mode,
-                off_road=True,
-                off_route=True,
-                on_shoulder=True,
+                off_road=False,
+                off_route=False,
+                on_shoulder=False,
             ),
             waypoints=True,
         )
-        # register_dummy_locator(self.social_interface)
         register_dummy_locator(self.social_interface)
 
         self.obs_state = ObservationState()
@@ -188,14 +187,27 @@ class SMARTSBubbleEnv:
     def check_social_agent_terminals(self, raw_observations):
         social_dones = {}
         for social_agent_id, social_agent_obs in raw_observations.items():
-            if not self.social_agent_interface_mode:
-                social_dones[social_agent_id] = False
-                continue
+            # if not self.social_agent_interface_mode:
+            #     social_dones[social_agent_id] = False
+            #     continue
             done = False
-            for feat in SOCIAL_AGENT_TERMINAL_FEATRUES:
+            for feat in SOCIAL_AGENT_TERMINAL_FEATURES:
                 if feat == "collisions":
-                    done = done | (len(getattr(social_agent_obs.events, feat)) > 0)
+                    if len(getattr(social_agent_obs.events, feat)) == 0 or isinstance(
+                        social_agent_obs.events.collisions[0].collidee_id, type(None)
+                    ):
+                        continue
+                    if (
+                        social_agent_obs.events.collisions[0].collidee_id[:6]
+                        == "BUBBLE"
+                    ):
+                        print(
+                            f"social_done with:{social_agent_obs.events.collisions[0].collidee_id}"
+                        )
+                        done = True
                 else:
+                    if getattr(social_agent_obs.events, feat):
+                        print(f"social_done with:{feat} True")
                     done = done | getattr(social_agent_obs.events, feat)
             social_dones[social_agent_id] = done
         return social_dones
@@ -239,6 +251,9 @@ class SMARTSBubbleEnv:
             social_agent_observation,
         ) in self.obs_state.last_observations.items():
             if social_agent_id not in self.used_history_ids:
+                if social_agent_observation.ego_vehicle_state.lane_index == None:
+                    self.done_n[social_agent_id] = True
+                    continue
                 info_n["social_agent_mapping"][
                     social_agent_id
                 ] = SocialAgentMapping.mapping_index(

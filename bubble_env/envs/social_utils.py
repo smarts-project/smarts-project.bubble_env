@@ -4,7 +4,8 @@ from typing import Tuple, List, Dict
 
 from rlkit.torch.common.policies import ReparamTanhMultivariateGaussianPolicy
 
-SOCIAL_AGENT_TERMINAL_FEATRUES = ["collisions", "off_road", "off_route", "on_shoulder"]
+# SOCIAL_AGENT_TERMINAL_FEATURES = ["collisions", "off_road", "off_route", "on_shoulder"]
+SOCIAL_AGENT_TERMINAL_FEATURES = ["collisions", "off_road", "off_route"]
 EPS = np.finfo(np.float32).eps.item()
 
 non_cutin_model_path = "../rlkit/model/non-cutin_model"

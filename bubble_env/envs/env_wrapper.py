@@ -79,23 +79,18 @@ class SocialAgentsWrapper:
         self.last_social_agent_observation_n = {}
         ego_obs_n = {}
         ego_done_n = {}
-        search_flag = 0
         for agent_id, raw_obs in full_obs_n.items():
-            if agent_id not in info_n["social_agent_mapping"]:
+            if agent_id[:5] == "agent":
                 ego_obs_n[agent_id] = raw_obs
                 ego_done_n[agent_id] = full_done_n[agent_id]
             else:
                 if not full_done_n[agent_id]:
                     self.last_social_agent_observation_n[agent_id] = raw_obs
-                else:
-                    search_flag = 1
-        if search_flag == 1:
-            for agent_id in ego_done_n:
-                ego_done_n[agent_id] = True
 
         for social_agent_id, mapping_index in info_n["social_agent_mapping"].items():
             self.social_agent_mapping[social_agent_id] = mapping_index
         info_n.pop("social_agent_mapping")
+
         return ego_obs_n, reward_n, ego_done_n, info_n
 
     def seed(self, **kwargs):
