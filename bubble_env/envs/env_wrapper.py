@@ -95,3 +95,6 @@ class SocialAgentsWrapper:
 
     def seed(self, **kwargs):
         return self._env(**kwargs)
+
+    def close(self):
+        self._env.close()

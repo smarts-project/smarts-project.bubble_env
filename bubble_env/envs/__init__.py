@@ -1,3 +1,4 @@
+from typing import Any
 from .core import SMARTSBubbleEnv
 from .env_wrapper import SocialAgentsWrapper
 import numpy as np
@@ -10,6 +11,23 @@ import os
 class SocialAgentPolicy:
     def __call__(self, observation):
         return 0.0, 0.0
+
+
+class BubbleTrafficEnv(gym.Env):
+    def __init__(self, agent_interface, traffic_mode="default") -> None:
+        self._env = get_bubble_env(agent_interface, traffic_mode)
+
+    def seed(self, **kwargs):
+        self._env.seed(**kwargs)
+
+    def step(self, action: Any):
+        return self._env.step(action)
+
+    def reset(self, observation: Any):
+        return self._env.reset(observation)
+
+    def close(self):
+        self._env.close()
 
 
 def get_bubble_env(agent_interface=None, traffic_mode="default"):
@@ -25,13 +43,13 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
             waypoints=True,  # Only for RL training
         )
     vehicles = []
-    current_path = os.path.dirname(__file__)
-    father_path = os.path.abspath(os.path.dirname(current_path))
+    file_directory = os.path.dirname(__file__)
+    root_path = os.path.abspath(os.path.dirname(file_directory))
     with open(
-        os.path.join(father_path, "models/list_true_legal_vehicle_infos.json"), "r"
+        os.path.join(root_path, "models/list_true_legal_vehicle_infos.json"), "r"
     ) as f:
         all_vehicle_infos = json.load(f)
-    print("vehicle_num:{}".format(len(all_vehicle_infos)))
+
     for json_info in all_vehicle_infos:
         vehicle = VehicleInfo(
             vehicle_id=json_info["vehicle_id"],
@@ -44,7 +62,7 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
     core_env = SMARTSBubbleEnv(
         agent_interface=agent_interface,
         vehicles=vehicles,
-        scenario_path=os.path.join(father_path, "scenarios/"),
+        scenario_path=os.path.join(root_path, "scenarios/"),
         social_agent_mapping_mode=traffic_mode,
         social_agent_interface_mode=False,
         collision_done=False,

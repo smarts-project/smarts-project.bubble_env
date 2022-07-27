@@ -65,6 +65,7 @@ def create_moving_bubble(
     ), "Must follow only one of vehicle or agent"
 
     exclusion_prefixes = ()
+    follow = {}
     if follow_vehicle_id:
         follow = dict(follow_vehicle_id=follow_vehicle_id)
         exclusion_prefixes = (follow_vehicle_id,)
@@ -219,7 +220,7 @@ class SMARTSBubbleEnv:
             if self.done_n[agent_id]:
                 continue
             action = action_n[agent_id]
-            if agent_id[:5] == "agent":
+            if agent_id.startswith("agent"):
                 ego_action_n[agent_id] = action
             else:
                 social_action_n[agent_id] = action
@@ -369,6 +370,12 @@ class SMARTSBubbleEnv:
         self.vehicle_itr += self.n_agents
         self.episode_count += 1
         return raw_observation_n
+
+    def close(self):
+        """Closes the environment and releases all resources."""
+        if self.smarts is not None:
+            self.smarts.destroy()
+            self.smarts = None
 
     def _set_traffic(self, traffic_name):
         self.scenario = None
