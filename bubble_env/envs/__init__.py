@@ -13,23 +13,6 @@ class SocialAgentPolicy:
         return 0.0, 0.0
 
 
-class BubbleTrafficEnv(gym.Env):
-    def __init__(self, agent_interface, traffic_mode="default") -> None:
-        self._env = get_bubble_env(agent_interface, traffic_mode)
-
-    def seed(self, **kwargs):
-        self._env.seed(**kwargs)
-
-    def step(self, action: Any):
-        return self._env.step(action)
-
-    def reset(self, observation: Any):
-        return self._env.reset(observation)
-
-    def close(self):
-        self._env.close()
-
-
 def get_bubble_env(agent_interface=None, traffic_mode="default"):
     if agent_interface is None:
         agent_interface = AgentInterface.from_type(
