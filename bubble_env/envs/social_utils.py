@@ -1,16 +1,20 @@
+import inspect
+import os
 import numpy as np
 import torch
 from typing import Tuple, List, Dict
 
+import rlkit
 from rlkit.torch.common.policies import ReparamTanhMultivariateGaussianPolicy
 
 # SOCIAL_AGENT_TERMINAL_FEATURES = ["collisions", "off_road", "off_route", "on_shoulder"]
 SOCIAL_AGENT_TERMINAL_FEATURES = ["collisions", "off_road", "off_route"]
 EPS = np.finfo(np.float32).eps.item()
 
-non_cutin_model_path = "../rlkit/model/non-cutin_model"
-left_model_path = "../rlkit/model/leftmodel"
-right_model_path = "../rlkit/model/rightmodel"
+rlkit_dir = os.path.dirname(rlkit.__file__)
+non_cutin_model_path = f"{rlkit_dir}/model/non-cutin_model"
+left_model_path = f"{rlkit_dir}/model/leftmodel"
+right_model_path = f"{rlkit_dir}/model/rightmodel"
 
 
 def split_list_dict_to_ego_and_soical(raw_list_dict: List[Dict]):
@@ -93,7 +97,4 @@ class SocialAgentMapping:
         ego_lane_index = ego_obs.ego_vehicle_state.lane_index
         vehicle_lane_index = vehicle_obs.ego_vehicle_state.lane_index
 
-        if vehicle_lane_index >= ego_lane_index:
-            return 0
-        else:
-            return 1
+        return 0 if vehicle_lane_index >= ego_lane_index else 1
