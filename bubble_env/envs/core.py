@@ -143,7 +143,6 @@ class SMARTSBubbleEnv:
         self.agent_interface = agent_interface
 
         self.social_agent_mapping_mode = social_agent_mapping_mode
-        print(f"social mapping mode:{social_agent_mapping_mode}")
 
         envision_client = None
         if envision:
