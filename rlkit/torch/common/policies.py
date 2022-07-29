@@ -108,7 +108,7 @@ class ReparamTanhMultivariateGaussianPolicy(Mlp, ExplorationPolicy):
             else:
                 action = tanh_normal.sample()
 
-        # doing it like this for now for backwards compatibility
+        # XXX: doing it like this for now for backwards compatibility
         if return_tanh_normal:
             return (
                 action,
@@ -259,7 +259,7 @@ class ReparamMultivariateGaussianPolicy(Mlp, ExplorationPolicy):
             if return_log_prob:
                 log_prob = normal.log_prob(action)
 
-        # I'm doing it like this for now for backwards compatibility, sorry!
+        # XXX: Doing it like this for now for backwards compatibility
         if return_normal:
             return (
                 action,

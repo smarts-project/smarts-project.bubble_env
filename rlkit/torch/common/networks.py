@@ -420,10 +420,8 @@ class TanhMlpPolicy(MlpPolicy):
 
 class ObsPreprocessedQFunc(FlattenMlp):
     """
-    This is a weird thing and I didn't know what to call.
-    Basically I wanted this so that if you need to preprocess
-    your inputs somehow (attention, gating, etc.) with an external module
-    before passing to the policy you could do so.
+    If you need to preprocess your inputs somehow (attention, gating, etc.) with an external module
+    before passing to the policy you can do so.
     Assumption is that you do not want to update the parameters of the preprocessing
     module so its output is always detached.
     """
@@ -459,10 +457,8 @@ class ObsPreprocessedQFunc(FlattenMlp):
 
 class ObsPreprocessedVFunc(FlattenMlp):
     """
-    This is a weird thing and I didn't know what to call.
-    Basically I wanted this so that if you need to preprocess
-    your inputs somehow (attention, gating, etc.) with an external module
-    before passing to the policy you could do so.
+    If you need to preprocess your inputs somehow (attention, gating, etc.) with an external module
+    before passing to the policy you can do so.
     Assumption is that you do not want to update the parameters of the preprocessing
     module so its output is always detached.
     """

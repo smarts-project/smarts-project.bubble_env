@@ -1,6 +1,14 @@
-from . import BubbleTrafficEnv
+import inspect
+import os
+import sys
+import numpy as np
 
-import gym
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
+import envs
+
 
 class EgoVehicle:
     def act(self, obs):
@@ -8,14 +16,13 @@ class EgoVehicle:
 
 
 def main():
-    env = BubbleTrafficEnv(traffic_mode="traffic_A")
+    env = envs.entry_point(config=dict(traffic_mode="traffic_A", action_space="Direct"))
     ego_policy = EgoVehicle()
 
     episode_num = 20
     for episode in range(episode_num):
         ego_obs = env.reset()
         steps = 0
-        dones={}
         while True:
             ego_action = {}
             for agent_id, obs in ego_obs.items():
@@ -28,6 +35,7 @@ def main():
         print(f"episode {episode} finished! steps: {steps}")
 
     print("all finished")
+
 
 if __name__ == "__main__":
     main()

@@ -117,7 +117,6 @@ class SMARTSBubbleEnv:
                     end_time (Optional): Specify the end_time of the vehicle (can not be
                         "last-seen-time"). Default None (use the last-seen-time).
         """
-        print("Now Create Bubble Env")
 
         assert control_vehicle_num == 1  # Bubble should only support 1 ego_vehicle
         self.collision_done = collision_done
