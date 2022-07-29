@@ -373,9 +373,7 @@ class SMARTSBubbleEnv:
 
     def close(self):
         """Closes the environment and releases all resources."""
-        if self.smarts is not None:
-            self.smarts.destroy()
-            self.smarts = None
+        self.destroy()
 
     def _set_traffic(self, traffic_name):
         self.scenario = None
@@ -409,6 +407,7 @@ class SMARTSBubbleEnv:
     def destroy(self):
         if self.smarts is not None:
             self.smarts.destroy()
+            self.smarts = None
 
     def _vehicle_pos_between(self, vehicle_id: str, start_time: float, end_time: float):
         """Find the vehicle states between the given history times."""
