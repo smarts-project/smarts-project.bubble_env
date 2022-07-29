@@ -33,7 +33,8 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 print(sys.path)
 
-from bubble_env.envs import get_bubble_env
+import gym
+import bubble_env.envs
 
 LR = 3e-4
 GAMMA = 0.99
@@ -51,8 +52,9 @@ BATCH_SIZE = 8
 LOG_INTERVAL = 1
 
 
-def evaluate(agent):
-    eval_env = get_bubble_env()
+def evaluate(agent, env_id):
+    # TODO: get `gym.make(env_id)` working
+    eval_env = bubble_env.envs.entry_point()
     # eval_env = wrap_rms(eval_env, GAMMA, test=True, ob_rms=ob_rms)
     eval_episode_rewards = []
     obs = eval_env.reset()
@@ -79,10 +81,9 @@ def evaluate(agent):
     return np.mean(eval_episode_rewards)
 
 
-def main():
+def main(env_id):
     paddle.seed(args.seed)
-    env = get_bubble_env()
-    # env = wrap_rms(env, GAMMA)
+    env = bubble_env.envs.entry_point()
 
     model = MujocoModel(56, 2)
 
@@ -106,7 +107,7 @@ def main():
             # Sample actions
             value, action, action_log_prob = agent.sample(rollouts.obs[step])
 
-            # Obser reward and next obs
+            # Observe reward and next obs
             obs, reward, done, info = env.step(
                 {"agent_0": (action[0, 0], action[0, 1])}
             )
@@ -161,7 +162,7 @@ def main():
             and len(episode_rewards) > 1
             and j % args.test_every_steps == 0
         ):
-            eval_mean_reward = evaluate(agent)
+            eval_mean_reward = evaluate(agent, env_id)
 
             summary.add_scalar(
                 "ppo/mean_validation_rewards", eval_mean_reward, (j + 1) * NUM_STEPS
@@ -184,9 +185,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--env",
-        default="Hopper-v1",
-        help="environment to train on (default: Hopper-v1)",
+        default="bubble_env-v0",
+        help="environment to train on (default: bubble_env-v0)",
     )
     args = parser.parse_args()
 
-    main()
+    main(env_id=args.env)
