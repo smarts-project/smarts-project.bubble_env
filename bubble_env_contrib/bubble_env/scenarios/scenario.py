@@ -6,9 +6,9 @@ from smarts.sstudio import types as t
 
 traffic_histories = [
     t.TrafficHistoryDataset(
-        name=f"i80_{hd}",
+        name=f"i80_{start}-{end}",
         source_type="NGSIM",
-        input_path=f"../../xy-trajectories/i80/trajectories-{hd}.txt",
+        input_path=f"../../xy-trajectories/i80/vehicle-trajectory-data/{start}pm-{end}pm/trajectories-{start}-{end}.txt",
         x_margin_px=60.0,
         swap_xy=True,
         flip_y=True,
@@ -18,7 +18,7 @@ traffic_histories = [
         max_angular_velocity=4,
         default_heading=1.5 * math.pi,
     )
-    for hd in ["0400-0415", "0500-0515", "0515-0530"]
+    for start, end in [("0400", "0415"), ("0500", "0515"), ("0515", "0530")]
 ]
 
 gen_scenario(

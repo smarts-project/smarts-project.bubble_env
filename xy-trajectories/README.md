@@ -1,1 +1,0 @@
-This should contain i80 text format files from NGSIM. If you wish to use scl build to generate the shf files for the ngsim related scenarios from `data.transportation.gov`.

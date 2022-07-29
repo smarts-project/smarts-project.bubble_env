@@ -7,8 +7,8 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-import envs
-
+import bubble_env_contrib.bubble_env.envs as envs
+import gym
 
 class EgoVehicle:
     def act(self, obs):
@@ -16,7 +16,7 @@ class EgoVehicle:
 
 
 def main():
-    env = envs.entry_point(config=dict(traffic_mode="traffic_A", action_space="Direct"))
+    env = gym.make("bubble_env_contrib:bubble_env-v0", config=dict(traffic_mode="traffic_A", action_space="Direct"))
     ego_policy = EgoVehicle()
 
     episode_num = 20
