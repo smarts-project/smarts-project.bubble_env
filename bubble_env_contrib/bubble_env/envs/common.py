@@ -23,9 +23,10 @@ obs_adapter = get_observation_adapter(
 """
 
 import math
-import gym
 import cv2
 import numpy as np
+import gym
+import gym.spaces
 
 from collections import OrderedDict
 from smarts.core.sensors import Observation

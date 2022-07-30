@@ -54,7 +54,7 @@ LOG_INTERVAL = 1
 
 def evaluate(agent, env_id):
     # TODO: get `gym.make(env_id)` working
-    eval_env = bubble_env.envs.entry_point()
+    eval_env = gym.make("bubble_env_contrib:bubble_env-v0")
     # eval_env = wrap_rms(eval_env, GAMMA, test=True, ob_rms=ob_rms)
     eval_episode_rewards = []
     obs = eval_env.reset()
@@ -83,7 +83,7 @@ def evaluate(agent, env_id):
 
 def main(env_id):
     paddle.seed(args.seed)
-    env = bubble_env.envs.entry_point()
+    env = gym.make("bubble_env_contrib:bubble_env-v0")
 
     model = MujocoModel(56, 2)
 

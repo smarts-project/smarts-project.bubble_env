@@ -130,7 +130,7 @@ sh==1.14.2
 Shapely==1.8.1
 six
 sklearn==0.0
-git+https://github.com/huawei-noah/SMARTS@bubble_traffic/comp-1#egg=smarts
+git+https://github.com/huawei-noah/SMARTS@bubble_traffic/comp-1#egg=smarts[camera-obs]
 soupsieve==2.3.1
 tableprint==0.9.1
 tabulate==0.8.9

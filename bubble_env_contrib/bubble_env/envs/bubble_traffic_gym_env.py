@@ -17,3 +17,8 @@ class BubbleTrafficGymEnv(gym.Env):
 
     def close(self):
         self._env.close()
+
+    def __getattr__(self, name):
+        """Forward everything else to the non-standard environment."""
+        attribute = getattr(self._env, name)
+        return attribute

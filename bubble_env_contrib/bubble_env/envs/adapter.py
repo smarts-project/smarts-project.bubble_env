@@ -1,5 +1,5 @@
 from .common import get_obs_adapter, subscribe_features
-import gym
+import gym.spaces
 
 
 def get_observation_adapter(feature_list, closest_neighbor_num, neighbor_max_distance):
