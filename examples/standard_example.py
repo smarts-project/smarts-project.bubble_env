@@ -12,14 +12,16 @@ class EgoVehicle:
         return 0.0, 0.0
 
 
-def main():
+def main(episode_num = 20):
     env = gym.make(
         "bubble_env_contrib:bubble_env-v0",
-        config=dict(traffic_mode="traffic_A", action_space="Direct"),
+        traffic_mode="traffic_A",
+        action_space="Direct",
+        img_meters=50,
+        img_pixels=200,
     )
-    ego_policy = EgoVehicle()
 
-    episode_num = 20
+    ego_policy = EgoVehicle()
     for episode in range(episode_num):
         ego_obs = env.reset()
         steps = 0
