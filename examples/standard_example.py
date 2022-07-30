@@ -12,7 +12,7 @@ class EgoVehicle:
         return 0.0, 0.0
 
 
-def main(episode_num = 20):
+def main(episode_num=20):
     env = gym.make(
         "bubble_env_contrib:bubble_env-v0",
         traffic_mode="traffic_A",

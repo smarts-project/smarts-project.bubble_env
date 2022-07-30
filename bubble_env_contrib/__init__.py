@@ -2,9 +2,7 @@ from typing import Any, Dict
 import gym
 
 
-def entry_point(
-    traffic_mode="traffic_A", action_space="Direct", **kwargs
-):
+def entry_point(traffic_mode="traffic_A", action_space="Direct", **kwargs):
     from bubble_env_contrib.bubble_env.envs.bubble_traffic_gym_env import (
         BubbleTrafficGymEnv,
     )
