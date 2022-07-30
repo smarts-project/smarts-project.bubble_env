@@ -6,13 +6,17 @@ import numpy as np
 import bubble_env_contrib.bubble_env.envs as envs
 import gym
 
+
 class EgoVehicle:
     def act(self, obs):
         return 0.0, 0.0
 
 
 def main():
-    env = gym.make("bubble_env_contrib:bubble_env-v0", config=dict(traffic_mode="traffic_A", action_space="Direct"))
+    env = gym.make(
+        "bubble_env_contrib:bubble_env-v0",
+        config=dict(traffic_mode="traffic_A", action_space="Direct"),
+    )
     ego_policy = EgoVehicle()
 
     episode_num = 20
