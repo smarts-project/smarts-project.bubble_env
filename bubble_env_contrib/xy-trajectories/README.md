@@ -1,3 +1,4 @@
+# Get datasets with `git-lfs`
 If you have [git-lfs](git-lfs.github.com) you may pull the necessary large files with the following command:
 
 ```bash
@@ -13,7 +14,7 @@ From this you will want to do the following:
 - Download `I80-Emeryville-CA.zip`
 - Unpack `i-80-vehicle-trajectory-data.zip` from `I80-Emeryville-CA.zip`
 - Unpack  `i-80-vehicle-trajectory-data.zip`
-- Place `vehicle-trajectory-data` in `i80/`
+- Place `vehicle-trajectory-data` in `./i80/`
 
 Some suggested commands for this are:
 ```bash

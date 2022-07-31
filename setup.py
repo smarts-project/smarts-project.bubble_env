@@ -16,4 +16,7 @@ setup(
     include_package_data=True,
     zip_safe=True,
     python_requires=">=3.7",
+    install_requires=[
+        "smarts[camera-obs] @ git+https://github.com/huawei-noah/SMARTS@bubble_traffic/comp-1"
+    ]
 )

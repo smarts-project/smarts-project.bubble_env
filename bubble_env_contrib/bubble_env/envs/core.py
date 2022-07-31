@@ -50,8 +50,7 @@ def register_dummy_locator(interface, name="dummy_agent-v0"):
     register(
         name,
         entry_point=lambda **kwargs: AgentSpec(
-            interface=interface,
-            agent_builder=DummyAgent,
+            interface=interface, agent_builder=DummyAgent,
         ),
     )
 
@@ -435,9 +434,7 @@ class SMARTSBubbleEnv:
                 continue
             start_time = v.start_time
             rows = self._vehicle_pos_between(
-                vehicle_id,
-                start_time=start_time - 0.1,
-                end_time=start_time,
+                vehicle_id, start_time=start_time - 0.1, end_time=start_time,
             )
             rows = list(rows)
             assert len(rows) > 0, rows

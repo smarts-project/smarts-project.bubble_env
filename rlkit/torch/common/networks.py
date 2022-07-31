@@ -196,10 +196,7 @@ class ConditionalMlp(PyTorchModule):
 
     @torch.jit.ignore
     def forward(
-        self,
-        input,
-        latent_variable,
-        return_preactivations=False,
+        self, input, latent_variable, return_preactivations=False,
     ):
         h_input = input
         for i, fc in enumerate(self.input_encoder_fcs):
@@ -234,9 +231,7 @@ class ConditionalMlp(PyTorchModule):
 
     @torch.jit.export
     def jit_forward(
-        self,
-        input,
-        latent_variable,
+        self, input, latent_variable,
     ):
         """
         torch.jit does not support condition control (such as if ... else ...)

@@ -24,10 +24,7 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
         agent_interface = AgentInterface.from_type(
             AgentType.Direct,
             done_criteria=DoneCriteria(
-                collision=False,
-                off_road=True,
-                off_route=False,
-                on_shoulder=False,
+                collision=False, off_road=True, off_route=False, on_shoulder=False,
             ),
             waypoints=True,  # Only for RL training
         )
@@ -59,12 +56,6 @@ def get_bubble_env(agent_interface=None, traffic_mode="default"):
         control_vehicle_num=1,
     )
     bubble_env = SocialAgentsWrapper(
-        env=core_env,
-        action_range=np.array(
-            [
-                [-3.0, -2.0],
-                [3.0, 2.0],
-            ]
-        ),
+        env=core_env, action_range=np.array([[-3.0, -2.0], [3.0, 2.0],]),
     )
     return bubble_env

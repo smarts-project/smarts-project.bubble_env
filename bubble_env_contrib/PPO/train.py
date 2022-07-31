@@ -53,7 +53,6 @@ LOG_INTERVAL = 1
 
 
 def evaluate(agent, env_id):
-    # TODO: get `gym.make(env_id)` working
     eval_env = gym.make("bubble_env_contrib:bubble_env-v0")
     # eval_env = wrap_rms(eval_env, GAMMA, test=True, ob_rms=ob_rms)
     eval_episode_rewards = []

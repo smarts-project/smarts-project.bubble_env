@@ -42,14 +42,9 @@ def split_dict_to_ego_and_social(raw_dict: Dict):
 class SocialAgent(object):
     """This is just a place holder for the actual agent."""
 
-    def __init__(
-        self,
-        model_path,
-    ) -> None:
+    def __init__(self, model_path,) -> None:
         self.policy = ReparamTanhMultivariateGaussianPolicy(
-            hidden_sizes=[256] * 3,
-            obs_dim=56,
-            action_dim=2,
+            hidden_sizes=[256] * 3, obs_dim=56, action_dim=2,
         )
         self.policy.load_state_dict(torch.load(model_path + "/model_parameter.pkl"))
         self.obs_mean = np.load(model_path + "/mean.npy")

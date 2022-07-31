@@ -27,9 +27,7 @@ class SocialAgentsWrapper:
 
         self.feature_list = FeatureGroup[feature_type]
         self.agent_spec = get_agent_spec(
-            self.feature_list,
-            closest_neighbor_num,
-            neighbor_max_distance,
+            self.feature_list, closest_neighbor_num, neighbor_max_distance,
         )  # agent_spec for social agents
         self.last_social_agent_observation_n = {}
         self.social_agent_mapping = {}
@@ -93,8 +91,8 @@ class SocialAgentsWrapper:
 
         return ego_obs_n, reward_n, ego_done_n, info_n
 
-    def seed(self, **kwargs):
-        return self._env(**kwargs)
+    def seed(self, *args, **kwargs):
+        return self._env.seed(*args, **kwargs)
 
     def close(self):
         self._env.close()

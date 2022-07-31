@@ -20,6 +20,7 @@ def main(episode_num=20):
         img_meters=50,
         img_pixels=200,
     )
+    env.seed(24)
 
     ego_policy = EgoVehicle()
     for episode in range(episode_num):

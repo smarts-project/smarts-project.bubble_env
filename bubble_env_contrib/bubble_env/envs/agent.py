@@ -9,10 +9,7 @@ def get_agent_spec(
     feature_list, closest_neighbor_num, neighbor_max_distance, collision_done=True
 ):
     done_criteria = DoneCriteria(
-        collision=collision_done,
-        off_road=True,
-        off_route=True,
-        on_shoulder=True,
+        collision=collision_done, off_road=True, off_route=True, on_shoulder=True,
     )
     interface = AgentInterface(
         done_criteria=done_criteria,

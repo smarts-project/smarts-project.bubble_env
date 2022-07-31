@@ -6,12 +6,7 @@ import numpy as np
 
 class Normalizer(object):
     def __init__(
-        self,
-        size,
-        eps=1e-8,
-        default_clip_range=np.inf,
-        mean=0,
-        std=1,
+        self, size, eps=1e-8, default_clip_range=np.inf, mean=0, std=1,
     ):
         self.size = size
         self.eps = eps
@@ -79,12 +74,7 @@ class IdentityNormalizer(object):
 
 class FixedNormalizer(object):
     def __init__(
-        self,
-        size,
-        default_clip_range=np.inf,
-        mean=0,
-        std=1,
-        eps=1e-8,
+        self, size, default_clip_range=np.inf, mean=0, std=1, eps=1e-8,
     ):
         assert std > 0
         std = std + eps
@@ -142,7 +132,7 @@ class RunningMeanStd(object):
         new_mean = self.mean + delta * batch_count / total_count
         m_a = self.var * self.count
         m_b = batch_var * batch_count
-        m_2 = m_a + m_b + delta**2 * self.count * batch_count / total_count
+        m_2 = m_a + m_b + delta ** 2 * self.count * batch_count / total_count
         new_var = m_2 / total_count
 
         self.mean, self.var = new_mean, new_var
