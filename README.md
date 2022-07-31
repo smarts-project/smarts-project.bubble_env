@@ -1,3 +1,5 @@
+# NOTE: this has been moved to https://bitbucket.org/malban/bubble_env
+
 To get this contribution working you will want to do the following:
 
 ```bash
